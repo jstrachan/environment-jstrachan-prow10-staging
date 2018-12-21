@@ -44,3 +44,29 @@ jenkins:
   enabled: false
 controllerbuild:
   enabled: true
+exposecontroller:
+  config:
+    domain: 35.233.10.249.nip.io
+    exposer: Ingress
+    http: "true"
+    tlsacme: ""
+    pathmode: ""
+  annotations:
+    helm.sh/hook: post-install,post-upgrade
+    helm.sh/hook-delete-policy: hook-succeeded
+jenkins:
+  servers:
+    gitea: []
+    ghe: []
+    global:
+      envvars:
+        TILLER_NAMESPACE: kube-system
+  enabled: false
+prow:
+  user: ""
+  hmactoken: ""
+  oauthtoken: ""
+pipelinesecrets:
+  dockerconfig: ""
+controllerbuild:
+  enabled: true

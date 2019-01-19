@@ -1,72 +1,45 @@
-expose:
-  Args: 
-    - --v
-    - 4
-  Annotations:
-    helm.sh/hook: post-install,post-upgrade
-    helm.sh/hook-delete-policy: hook-succeeded
-
+PipelineSecrets: {}
 cleanup:
-  Args: 
-    - --cleanup
   Annotations:
     helm.sh/hook: pre-delete
     helm.sh/hook-delete-policy: hook-succeeded
-expose:
-  config:
-    domain: 35.241.199.59.nip.io
-    exposer: Ingress
-    http: "true"
-  Annotations:
-    helm.sh/hook: post-install,post-upgrade
-    helm.sh/hook-delete-policy: hook-succeeded
-jenkins:
-  Servers:
-    Global:
-      EnvVars:
-        TILLER_NAMESPACE: kube-system
-  enabled: false
+  Args:
+  - --cleanup
 controllerbuild:
   enabled: true
 expose:
-  config:
-    domain: 35.241.239.177.nip.io
-    exposer: Ingress
-    http: "true"
   Annotations:
     helm.sh/hook: post-install,post-upgrade
     helm.sh/hook-delete-policy: hook-succeeded
-jenkins:
-  Servers:
-    Global:
-      EnvVars:
-        TILLER_NAMESPACE: kube-system
-  enabled: false
-controllerbuild:
-  enabled: true
+  config:
+    domain: 35.205.26.52.nip.io
+    exposer: Ingress
+    http: "true"
 exposecontroller:
+  annotations:
+    helm.sh/hook: post-install,post-upgrade
+    helm.sh/hook-delete-policy: hook-succeeded
   config:
     domain: 35.233.10.249.nip.io
     exposer: Ingress
     http: "true"
-    tlsacme: ""
     pathmode: ""
-  annotations:
-    helm.sh/hook: post-install,post-upgrade
-    helm.sh/hook-delete-policy: hook-succeeded
+    tlsacme: ""
 jenkins:
+  Servers:
+    Global:
+      EnvVars:
+        TILLER_NAMESPACE: kube-system
+  enabled: false
   servers:
-    gitea: []
     ghe: []
+    gitea: []
     global:
       envvars:
         TILLER_NAMESPACE: kube-system
-  enabled: false
-prow:
-  user: ""
-  hmactoken: ""
-  oauthtoken: ""
 pipelinesecrets:
   dockerconfig: ""
-controllerbuild:
-  enabled: true
+prow:
+  hmactoken: ""
+  oauthtoken: ""
+  user: ""
